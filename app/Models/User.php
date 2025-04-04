@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Itinerary::class);
     }
+
+    public function memos()
+    {
+        return $this->hasMany(Memo::class);
+    }
 }
