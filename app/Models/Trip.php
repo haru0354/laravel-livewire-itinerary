@@ -13,4 +13,14 @@ class Trip extends Model
         'title',
         'destination',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function itineraries()
+    {
+        return $this->hasMany(Itinerary::class);
+    }
 }
