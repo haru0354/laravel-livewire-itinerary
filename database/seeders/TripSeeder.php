@@ -51,10 +51,10 @@ class TripSeeder extends Seeder
             ],
             [
                 'user_id'    => 2,
-                'start_date' => '2025-11-01',
-                'end_date'   => '2025-11-03',
-                'title'      => '福岡グルメ旅',
-                'destination' => '福岡',
+                'start_date' => '2025-10-01',
+                'end_date'   => '2025-10-05',
+                'title'     => '大阪旅行',
+                'destination' => '大阪',
             ],
         ]);
     }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Trip;
+use App\Models\Itinerary;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,48 +13,66 @@ class TripSeeder extends Seeder
      */
     public function run(): void
     {
-        Trip::insert([
+        Itinerary::insert([
             [
-                'user_id'    => 1,
-                'start_date' => '2025-06-01',
-                'end_date'   => '2025-06-05',
-                'title'      => '北海道旅行',
-                'destination' => '北海道',
+                'trip_id'        => 1,
+                'user_id'        => 1,
+                'date_and_time'  => '2025-06-01 09:00:00',
+                'title'          => '北海道到着',
+                'content'        => '新千歳空港に到着',
+                'hide_content'   => '新千歳空港に到着',
+                'image_url'      => '',
+                'image_alt'      => ''
             ],
             [
-                'user_id'    => 1,
-                'start_date' => '2025-07-10',
-                'end_date'   => '2025-07-15',
-                'title'      => '沖縄バカンス',
-                'destination' => '沖縄',
+                'trip_id'        => 1,
+                'user_id'        => 1,
+                'date_and_time'  => '2025-06-01 12:00:00',
+                'title'          => '札幌観光',
+                'content'        => '時計台や大通公園を散策',
+                'hide_content'   => 'ラーメン横丁で昼食',
+                'image_url'      => '',
+                'image_alt'      => ''
             ],
             [
-                'user_id'    => 1,
-                'start_date' => '2025-08-20',
-                'end_date'   => '2025-08-25',
-                'title'      => '京都歴史巡り',
-                'destination' => '京都',
+                'trip_id'        => 1,
+                'user_id'        => 1,
+                'date_and_time'  => '2025-06-02 10:00:00',
+                'title'          => '小樽観光',
+                'content'        => '運河沿いを散策',
+                'hide_content'   => 'スイーツ店めぐり',
+                'image_url'      => '',
+                'image_alt'      => ''
             ],
             [
-                'user_id'    => 1,
-                'start_date' => '2025-09-05',
-                'end_date'   => '2025-09-10',
-                'title'      => '東京観光',
-                'destination' => '東京',
+                'trip_id'        => 1,
+                'user_id'        => 1,
+                'date_and_time'  => '2025-06-03 15:00:00',
+                'title'          => '登別温泉',
+                'content'        => '温泉でリラックス',
+                'hide_content'   => '足湯を楽しむ',
+                'image_url'      => '',
+                'image_alt'      => ''
             ],
             [
-                'user_id'    => 1,
-                'start_date' => '2025-10-01',
-                'end_date'   => '2025-10-05',
-                'title'      => '長野ハイキング',
-                'destination' => '長野',
+                'trip_id'        => 1,
+                'user_id'        => 1,
+                'date_and_time'  => '2025-06-05 08:00:00',
+                'title'          => '帰宅',
+                'content'        => '空港に向かう',
+                'hide_content'   => 'お土産購入',
+                'image_url'      => '',
+                'image_alt'      => ''
             ],
             [
-                'user_id'    => 2,
-                'start_date' => '2025-11-01',
-                'end_date'   => '2025-11-03',
-                'title'      => '福岡グルメ旅',
-                'destination' => '福岡',
+                'trip_id'        => 5,
+                'user_id'        => 2,
+                'date_and_time'  => '2025-07-10 10:00:00',
+                'title'          => '大阪到着',
+                'content'        => '関西国際空港に到着',
+                'hide_content'   => '3番出口より出て、レンタカーを借りる',
+                'image_url'      => '',
+                'image_alt'      => ''
             ],
         ]);
     }
