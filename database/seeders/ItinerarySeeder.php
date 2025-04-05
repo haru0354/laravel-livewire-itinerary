@@ -6,7 +6,7 @@ use App\Models\Itinerary;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TripSeeder extends Seeder
+class ItinerarySeeder extends Seeder
 {
     /**
      * Run the database seeds.
