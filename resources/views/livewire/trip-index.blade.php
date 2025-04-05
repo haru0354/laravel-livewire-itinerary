@@ -29,7 +29,4 @@
         </button>
     </div>
     @endif
-
-
-
 </div>
