@@ -36,19 +36,19 @@
     @endif
 
     @if($tripModal)
-    <x-ui.modal maxWidth="max-w-[560px]">
+    <x-ui.modal maxWidth="max-w-[560px]" wire="closeModal">
         <h3 class="text-2xl font-semibold mb-8">
             {{ $editingTripId ? '旅のしおりの編集' : '旅のしおりの追加' }}
         </h3>
         <form wire:submit.prevent="{{ $editingTripId ? 'tripUpdate' : 'tripStore' }}" class="flex flex-col items-start w-full text-left">
             @csrf
-            <div class="flex justify-between w-full gap-4">
-                <div class="flex flex-col w-1/2 mr-4">
+            <div class="flex justify-between w-full">
+                <div class="flex flex-col w-1/2 mr-6">
                     <label for="start_date" class="my-2">出発日</label>
                     <input type="date" wire:model="start_date" id="start_date">
 
                 </div>
-                <div class="flex flex-col w-1/2 mr-4">
+                <div class="flex flex-col w-1/2">
                     <label for="end_date" class="my-2">帰宅日</label>
                     <input type="date" wire:model="end_date" id="end_date">
                 </div>
