@@ -61,9 +61,16 @@
                 {{ $editingTripId ? '旅のしおりを編集' : '旅のしおりを追加' }}
             </button>
         </form>
-        <button wire:click="closeModal" class="">
+        <button wire:click="closeModal">
             閉じる
         </button>
+        @if ($editingTripId)
+        <div class="flex flex-col items-center justify-center mt-4 border-t border-gray-400 border-dashed">
+            <button class="mt-4" wire:click="tripDestroy">
+                削除
+            </button>
+        </div>
+        @endif
     </x-ui.modal>
     @endif
 

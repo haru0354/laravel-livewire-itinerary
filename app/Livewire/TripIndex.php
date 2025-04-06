@@ -82,6 +82,18 @@ class TripIndex extends Component
         $this->closeModal();
     }
 
+    public function tripDestroy()
+    {
+        $trip = Trip::find($this->editingTripId);
+        $trip->delete();
+
+        $this->trips = Trip::where('user_id', $this->user_id)
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+        $this->closeModal();
+    }
+
     public function resetTrip()
     {
         $this->reset(['editingTripId', 'start_date', 'end_date', 'title', 'destination']);
