@@ -32,7 +32,31 @@
 
     @if($tripModal)
     <x-ui.modal maxWidth="max-w-[560px]">
-        <button wire:click="closeModal">
+        <h3 class="text-2xl font-semibold mb-8">
+            旅のしおりの追加
+        </h3>
+        <form wire:submit.prevent="tripStore" class="flex flex-col items-start w-full text-left">
+            @csrf
+            <div class="flex justify-between w-full gap-4">
+                <div class="flex flex-col w-1/2 mr-4">
+                    <label for="start_date" class="my-2">出発日</label>
+                    <input type="date" wire:model="start_date" id="start_date">
+
+                </div>
+                <div class="flex flex-col w-1/2 mr-4">
+                    <label for="end_date" class="my-2">帰宅日</label>
+                    <input type="date" wire:model="end_date" id="end_date">
+                </div>
+            </div>
+            <label for="title" class="my-2">タイトル</label>
+            <input type="text" wire:model="title" id="title" class="w-full">
+            <label for="destination" class="my-2">行先</label>
+            <input type="text" wire:model="destination" id="destination" class="w-full">
+            <button class="mx-auto my-8">
+                旅のしおりを追加'
+            </button>
+        </form>
+        <button wire:click="closeModal" class="">
             閉じる
         </button>
     </x-ui.modal>

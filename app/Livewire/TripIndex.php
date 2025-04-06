@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Auth;
 
 class TripIndex extends Component
 {
-    public $userId;
+    public $user_id;
     public $trips;
     public $tripModal = false;
+    public $start_date, $end_date, $title, $destination;
 
     public function mount()
     {
-        $this->userId = Auth::id();
-        $this->trips = Trip::where('user_id', $this->userId)
+        $this->user_id = Auth::id();
+        $this->trips = Trip::where('user_id', $this->user_id)
             ->orderBy('start_date', 'asc')
             ->get();
     }
@@ -28,6 +29,23 @@ class TripIndex extends Component
     public function closeModal()
     {
         $this->tripModal = false;
+    }
+
+    public function tripStore()
+    {
+        Trip::create([
+            'user_id' => Auth::id(),
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'title' => $this->title,
+            'destination' => $this->destination,
+        ]);
+
+        $this->trips = Trip::where('user_id', $this->user_id)
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+        $this->closeModal();
     }
 
     public function render()
