@@ -10,6 +10,7 @@ class TripIndex extends Component
 {
     public $user_id;
     public $trips;
+    public $editingTripId = null;
     public $tripModal = false;
     public $start_date, $end_date, $title, $destination;
 
@@ -23,6 +24,18 @@ class TripIndex extends Component
 
     public function openCreateModal()
     {
+        $this->tripModal = true;
+    }
+
+    public function openEditModal($trip_id)
+    {
+        $trip = Trip::find($trip_id);
+
+        $this->editingTripId = $trip->id;
+        $this->start_date = $trip->start_date;
+        $this->end_date = $trip->end_date;
+        $this->title = $trip->title;
+        $this->destination = $trip->destination;
         $this->tripModal = true;
     }
 

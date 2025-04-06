@@ -22,6 +22,11 @@
                 </span>
             </div>
             <p class="my-4"> 詳細を見る → </p>
+            <button
+                wire:click="openEditModal({{ $trip->id }})"
+                class="absolute top-0 right-0 text-white px-1 py-0 rounded shadow-md opacity-80 hover:opacity-100 bg-gray-500 transition-opacity">
+                📝編集
+            </button>
         </div>
         @endforeach
         <button wire:click="openCreateModal" class="min-h-[210px] p-6 rounded-lg shadow-md hover:shadow-lg border border-blue-300 bg-white transition">
