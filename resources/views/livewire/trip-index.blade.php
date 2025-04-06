@@ -38,9 +38,9 @@
     @if($tripModal)
     <x-ui.modal maxWidth="max-w-[560px]">
         <h3 class="text-2xl font-semibold mb-8">
-            旅のしおりの追加
+            {{ $editingTripId ? '旅のしおりの編集' : '旅のしおりの追加' }}
         </h3>
-        <form wire:submit.prevent="tripStore" class="flex flex-col items-start w-full text-left">
+        <form wire:submit.prevent="{{ $editingTripId ? 'tripUpdate' : 'tripStore' }}" class="flex flex-col items-start w-full text-left">
             @csrf
             <div class="flex justify-between w-full gap-4">
                 <div class="flex flex-col w-1/2 mr-4">
@@ -58,7 +58,7 @@
             <label for="destination" class="my-2">行先</label>
             <input type="text" wire:model="destination" id="destination" class="w-full">
             <button class="mx-auto my-8">
-                旅のしおりを追加'
+                {{ $editingTripId ? '旅のしおりを編集' : '旅のしおりを追加' }}
             </button>
         </form>
         <button wire:click="closeModal" class="">

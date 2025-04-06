@@ -27,9 +27,9 @@ class TripIndex extends Component
         $this->tripModal = true;
     }
 
-    public function openEditModal($trip_id)
+    public function openEditModal($editingTripId)
     {
-        $trip = Trip::find($trip_id);
+        $trip = Trip::find($editingTripId);
 
         $this->editingTripId = $trip->id;
         $this->start_date = $trip->start_date;
@@ -53,6 +53,25 @@ class TripIndex extends Component
             'title' => $this->title,
             'destination' => $this->destination,
         ]);
+
+        $this->trips = Trip::where('user_id', $this->user_id)
+            ->orderBy('start_date', 'asc')
+            ->get();
+
+        $this->closeModal();
+    }
+
+    public function tripUpdate()
+    {
+        $trip = Trip::find($this->editingTripId);
+
+        if ($trip) {
+            $trip->start_date = $this->start_date;
+            $trip->end_date = $this->end_date;
+            $trip->title = $this->title;
+            $trip->destination = $this->destination;
+            $trip->save();
+        }
 
         $this->trips = Trip::where('user_id', $this->user_id)
             ->orderBy('start_date', 'asc')
