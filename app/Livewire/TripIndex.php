@@ -24,11 +24,13 @@ class TripIndex extends Component
 
     public function openCreateModal()
     {
+        $this->resetTrip();
         $this->tripModal = true;
     }
 
     public function openEditModal($editingTripId)
     {
+        $this->resetTrip();
         $trip = Trip::find($editingTripId);
 
         $this->editingTripId = $trip->id;
@@ -78,6 +80,11 @@ class TripIndex extends Component
             ->get();
 
         $this->closeModal();
+    }
+
+    public function resetTrip()
+    {
+        $this->reset(['editingTripId', 'start_date', 'end_date', 'title', 'destination']);
     }
 
     public function render()
