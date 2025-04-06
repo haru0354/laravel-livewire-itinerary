@@ -24,9 +24,18 @@
             <p class="my-4"> 詳細を見る → </p>
         </div>
         @endforeach
-        <button class="min-h-[210px] p-6 rounded-lg shadow-md hover:shadow-lg border border-blue-300 bg-white transition">
+        <button wire:click="openCreateModal" class="min-h-[210px] p-6 rounded-lg shadow-md hover:shadow-lg border border-blue-300 bg-white transition">
             ➕
         </button>
     </div>
     @endif
+
+    @if($tripModal)
+    <x-ui.modal maxWidth="max-w-[560px]">
+        <button wire:click="closeModal">
+            閉じる
+        </button>
+    </x-ui.modal>
+    @endif
+
 </div>

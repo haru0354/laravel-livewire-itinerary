@@ -10,6 +10,7 @@ class TripIndex extends Component
 {
     public $userId;
     public $trips;
+    public $tripModal = false;
 
     public function mount()
     {
@@ -17,6 +18,16 @@ class TripIndex extends Component
         $this->trips = Trip::where('user_id', $this->userId)
             ->orderBy('start_date', 'asc')
             ->get();
+    }
+
+    public function openCreateModal()
+    {
+        $this->tripModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->tripModal = false;
     }
 
     public function render()
