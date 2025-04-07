@@ -77,6 +77,7 @@
     <!-- UIテスト -->
     <x-form.input name="a">テスト </x-form.input>
     <x-form.textarea name="aa">テスト </x-form.textarea>
+    <x-ui.button size="normal">テスト </x-ui.button>
 
 
 </div>
