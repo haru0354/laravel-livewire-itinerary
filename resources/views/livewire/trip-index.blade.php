@@ -76,6 +76,7 @@
 
     <!-- UIテスト -->
     <x-form.input name="a">テスト </x-form.input>
+    <x-form.textarea name="aa">テスト </x-form.textarea>
 
 
 </div>
