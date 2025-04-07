@@ -74,4 +74,8 @@
     </x-ui.modal>
     @endif
 
+    <!-- UIテスト -->
+    <x-form.input name="a">テスト </x-form.input>
+
+
 </div>
