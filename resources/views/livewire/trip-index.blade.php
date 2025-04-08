@@ -7,7 +7,7 @@
                 <h3 class="text-xl font-semibold">{{ $trip->title }}</h3>
             </div>
             <p class="my-4">{{ $trip->destination }}</p>
-            <div class="flex items-center text-sm">
+            <div class="flex items-center text-sm mb-4">
                 <span class="inline-flex items-center mr-4">
                     ✈️
                     <span class="ml-1">{{ $trip->start_date }}</span>
@@ -17,7 +17,9 @@
                     <span class="ml-1">{{ $trip->end_date }}</span>
                 </span>
             </div>
-            <p class="my-4"> 詳細を見る → </p>
+            <a href="{{ route('dashboard.trip.show', ['trip_id' => $trip->id]) }}" class="text-blue-600">
+                詳細を見る →
+            </a>
             <x-ui.edit-button wire="openEditModal({{ $trip->id }})" />
         </div>
         @endforeach
