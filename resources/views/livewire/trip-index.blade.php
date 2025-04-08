@@ -1,8 +1,4 @@
 <div>
-    @if ($trips->isEmpty())
-    <p>旅行データがありません。</p>
-    @else
-
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach ($trips as $trip)
         <div class="relative p-6 rounded-lg shadow-md hover:shadow-lg border border-gray-300 bg-white transition">
@@ -22,18 +18,13 @@
                 </span>
             </div>
             <p class="my-4"> 詳細を見る → </p>
-            <button
-                wire:click="openEditModal({{ $trip->id }})"
-                class="absolute top-0 right-0 text-white px-1 py-0 rounded shadow-md opacity-80 hover:opacity-100 bg-gray-500 transition-opacity">
-                📝編集
-            </button>
+            <x-ui.edit-button wire="openEditModal({{ $trip->id }})" />
         </div>
         @endforeach
         <button wire:click="openCreateModal" class="min-h-[210px] p-6 rounded-lg shadow-md hover:shadow-lg border border-blue-300 bg-white transition">
             ➕
         </button>
     </div>
-    @endif
 
     @if ($tripModal)
     <x-ui.modal maxWidth="max-w-[560px]" wire="closeModal">
@@ -60,12 +51,5 @@
         @endif
     </x-ui.modal>
     @endif
-
-    <!-- UIテスト -->
-    <x-form.input name="a">テスト </x-form.input>
-    <x-form.textarea name="aa">テスト </x-form.textarea>
-    <x-ui.button-link :route="route('top')">テスト </x-ui.button-link>
-    <x-ui.button size="normal">テスト </x-ui.button>
-
 
 </div>
