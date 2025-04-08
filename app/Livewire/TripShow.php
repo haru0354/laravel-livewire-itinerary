@@ -11,6 +11,7 @@ class TripShow extends Component
     public $user_id;
     public $trip_id;
     public $trip;
+    public $memoModal = false;
 
     public function mount($trip_id)
     {
@@ -24,6 +25,16 @@ class TripShow extends Component
                 'memos'
             ])
             ->first();
+    }
+
+    public function openCreateMemoModal()
+    {
+        $this->memoModal = true;
+    }
+
+    public function closeMemoModal()
+    {
+        $this->memoModal = false;
     }
 
     public function render()
