@@ -60,6 +60,7 @@ class TripIndex extends Component
             ->orderBy('start_date', 'asc')
             ->get();
 
+        $this->resetTrip();
         $this->closeModal();
     }
 
@@ -79,6 +80,7 @@ class TripIndex extends Component
             ->orderBy('start_date', 'asc')
             ->get();
 
+        $this->resetTrip();
         $this->closeModal();
     }
 
@@ -91,6 +93,7 @@ class TripIndex extends Component
             ->orderBy('start_date', 'asc')
             ->get();
 
+        $this->resetTrip();
         $this->closeModal();
     }
 
