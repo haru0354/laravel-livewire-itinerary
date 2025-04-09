@@ -66,6 +66,20 @@ class TripShow extends Component
         $this->closeMemoModal();
     }
 
+    public function memoUpdate()
+    {
+        $memo = Memo::find($this->editingMemoId);
+
+        if ($memo) {
+            $memo->title = $this->title;
+            $memo->content = $this->content;
+            $memo->save();
+        }
+        
+        $this->resetMemo();
+        $this->closeMemoModal();
+    }
+
     public function resetMemo()
     {
         $this->reset(['editingMemoId', 'title', 'content']);

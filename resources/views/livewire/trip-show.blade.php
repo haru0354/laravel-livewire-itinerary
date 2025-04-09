@@ -18,17 +18,17 @@
 
     @if ($memoModal)
     <x-ui.modal maxWidth="max-w-[560px]" wire="closeModal">
-        <form wire:submit.prevent="memoStore" class="flex flex-col w-full">
-            @csrf @csrf
+        <form wire:submit.prevent="{{ $editingMemoId ? 'memoUpdate' : 'memoStore' }}" class="flex flex-col w-full">
+            @csrf
             <h3 class="text-2xl text-center font-semibold mb-8">
-                メモの追加
+                {{ $editingMemoId ? 'メモの編集' : 'メモの追加' }}
             </h3>
             <x-form.input name="title" wire="title">タイトル</x-form.input>
             <x-form.textarea name="content" wire="content">
                 メモの内容
             </x-form.textarea>
             <x-ui.button class="block mx-auto my-4">
-                メモを追加する
+                {{ $editingMemoId ? 'メモを編集する' : 'メモを追加する' }}
             </x-ui.button>
         </form>
         <x-ui.button wire="closeMemoModal" color="gray" class="block mx-auto">
