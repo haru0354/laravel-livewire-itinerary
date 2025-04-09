@@ -12,7 +12,7 @@ class TripShow extends Component
     public $user_id;
     public $trip_id;
     public $trip;
-    public $editingTripId = null;
+    public $editingMemoId = null;
     public $memoModal = false;
     public $title, $content;
 
@@ -33,6 +33,17 @@ class TripShow extends Component
     public function openCreateMemoModal()
     {
         $this->resetMemo();
+        $this->memoModal = true;
+    }
+
+    public function openEditMemoModal($editingMemoId)
+    {
+        $this->resetMemo();
+        $memo = Memo::find($editingMemoId);
+
+        $this->editingMemoId = $memo->id;
+        $this->title = $memo->title;
+        $this->content = $memo->content;
         $this->memoModal = true;
     }
 
