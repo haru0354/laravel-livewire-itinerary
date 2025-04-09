@@ -12,6 +12,7 @@ class TripShow extends Component
     public $user_id;
     public $trip_id;
     public $trip;
+    public $editingTripId = null;
     public $memoModal = false;
     public $title, $content;
 
@@ -31,11 +32,13 @@ class TripShow extends Component
 
     public function openCreateMemoModal()
     {
+        $this->resetMemo();
         $this->memoModal = true;
     }
 
     public function closeMemoModal()
     {
+        $this->resetMemo();
         $this->memoModal = false;
     }
 
@@ -48,7 +51,13 @@ class TripShow extends Component
             'content' => $this->content,
         ]);
 
+        $this->resetMemo();
         $this->closeMemoModal();
+    }
+
+    public function resetMemo()
+    {
+        $this->reset(['editingMemoId', 'title', 'content']);
     }
 
     public function render()
