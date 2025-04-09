@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Memo;
 use App\Models\Trip;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class TripShow extends Component
     public $trip_id;
     public $trip;
     public $memoModal = false;
+    public $title, $content;
 
     public function mount($trip_id)
     {
@@ -35,6 +37,18 @@ class TripShow extends Component
     public function closeMemoModal()
     {
         $this->memoModal = false;
+    }
+
+    public function memoStore()
+    {
+        Memo::create([
+            'user_id' => $this->user_id,
+            'trip_id' => $this->trip_id,
+            'title' => $this->title,
+            'content' => $this->content,
+        ]);
+
+        $this->closeMemoModal();
     }
 
     public function render()
