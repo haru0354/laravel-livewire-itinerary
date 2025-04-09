@@ -17,7 +17,7 @@
     </div>
 
     @if ($memoModal)
-    <x-ui.modal maxWidth="max-w-[560px]" wire="closeModal">
+    <x-ui.modal maxWidth="max-w-[560px]" wire="closeMemoModal">
         <form wire:submit.prevent="{{ $editingMemoId ? 'memoUpdate' : 'memoStore' }}" class="flex flex-col w-full">
             @csrf
             <h3 class="text-2xl text-center font-semibold mb-8">
@@ -34,6 +34,11 @@
         <x-ui.button wire="closeMemoModal" color="gray" class="block mx-auto">
             閉じる
         </x-ui.button>
+        @if ($editingMemoId)
+        <div class="flex items-center justify-center mt-4 pt-4 border-t border-gray-400 border-dashed">
+            <x-ui.button wire="memoDestroy" color="red">削除 </x-ui.button>
+        </div>
+        @endif
     </x-ui.modal>
     @endif
 
