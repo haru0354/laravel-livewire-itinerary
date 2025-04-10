@@ -7,7 +7,7 @@ use App\Models\Trip;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
-class TripShow extends Component
+class TripMemo extends Component
 {
     public $user_id;
     public $trip_id;
@@ -96,6 +96,6 @@ class TripShow extends Component
 
     public function render()
     {
-        return view('livewire.trip-show');
+        return view('livewire.trip-memo');
     }
 }
