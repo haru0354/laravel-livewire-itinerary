@@ -2,7 +2,7 @@
     <div class="mb-16">
         <div class="flex justify-between items-center">
             <h3 class="w-full text-2xl font-semibold">旅程の一覧</h3>
-            <x-ui.button  color="blue">➕ 旅程の追加</x-ui.button>
+            <x-ui.button wire="openCreateItineraryModal" color="blue">➕ 旅程の追加</x-ui.button>
         </div>
         @foreach ($itineraries as $itinerary)
         <div class="relative flex flex-col my-6 p-6 border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow bg-gray-50">
@@ -13,4 +13,12 @@
         </div>
         @endforeach
     </div>
+
+    @if ($itineraryModal)
+    <x-ui.modal maxWidth="max-w-[560px]" wire="closeItineraryModal">
+        <x-ui.button wire="closeItineraryModal" color="gray" class="block mx-auto">
+            閉じる
+        </x-ui.button>
+    </x-ui.modal>
+    @endif
 </div>
