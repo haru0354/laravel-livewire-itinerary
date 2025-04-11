@@ -17,7 +17,7 @@
 
     @if ($itineraryModal)
     <x-ui.modal maxWidth="max-w-[560px]" wire="closeItineraryModal">
-        <form wire:submit.prevent="itineraryStore" class="flex flex-col w-full">
+        <form wire:submit.prevent="{{ $editingItineraryId ? 'itineraryUpdate' : 'itineraryStore' }}" class="flex flex-col w-full">
             @csrf
             <h3 class="text-2xl text-center font-semibold mb-8">
                 {{ $editingItineraryId ? '旅程の編集' : '旅程の追加' }}

@@ -44,7 +44,6 @@ class TripItinerary extends Component
         $this->itineraryModal = true;
     }
 
-
     public function closeItineraryModal()
     {
         $this->resetItinerary();
@@ -61,6 +60,22 @@ class TripItinerary extends Component
             'content' => $this->content,
             'hide_content' => $this->hide_content,
         ]);
+
+        $this->resetItinerary();
+        $this->closeItineraryModal();
+    }
+
+    public function itineraryUpdate()
+    {
+        $itinerary = Itinerary::find($this->editingItineraryId);
+
+        if ($itinerary) {
+            $itinerary->date_and_time = $this->date_and_time;
+            $itinerary->title = $this->title;
+            $itinerary->content = $this->content;
+            $itinerary->hide_content = $this->hide_content;
+            $itinerary->save();
+        }
 
         $this->resetItinerary();
         $this->closeItineraryModal();
