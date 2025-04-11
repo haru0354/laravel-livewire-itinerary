@@ -37,6 +37,11 @@
         <x-ui.button wire="closeItineraryModal" color="gray" class="block mx-auto">
             閉じる
         </x-ui.button>
+        @if ($editingItineraryId)
+        <div class="flex items-center justify-center mt-4 pt-4 border-t border-gray-400 border-dashed">
+            <x-ui.button wire="itineraryDestroy" color="red">削除 </x-ui.button>
+        </div>
+        @endif
     </x-ui.modal>
     @endif
 </div>

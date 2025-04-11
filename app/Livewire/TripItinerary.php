@@ -81,6 +81,15 @@ class TripItinerary extends Component
         $this->closeItineraryModal();
     }
 
+    public function itineraryDestroy()
+    {
+        $itinerary = Itinerary::find($this->editingItineraryId);
+        $itinerary->delete();
+
+        $this->resetItinerary();
+        $this->closeItineraryModal();
+    }
+
     public function resetItinerary()
     {
         $this->reset(['editingItineraryId', 'date_and_time', 'title', 'content', 'hide_content']);
