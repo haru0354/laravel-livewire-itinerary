@@ -8,8 +8,8 @@
         <div class="relative flex flex-col my-6 p-6 border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow bg-gray-50">
             <p class="mb-3">⌚️ {{ $itinerary->date_and_time }}</p>
             <h3 class="mb-2 text-xl font-bold">🗺 {{ $itinerary->title }}</h3>
-            <p class="mt-2">{{ $itinerary->content }}</p>
-            <p>{{ $itinerary->hide_content }}</p>
+            <p class="mt-2">{!! nl2br(e($itinerary->content)) !!}</p>
+            <p>{!! nl2br(e($itinerary->hide_content)) !!}</p>
             <x-ui.edit-button wire="openEditItineraryModal({{ $itinerary->id }})" />
         </div>
         @endforeach
