@@ -4,9 +4,11 @@ namespace App\Livewire;
 
 use App\Models\Itinerary;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class TripItinerary extends Component
 {
+    public $user_id;
     public $trip_id;
     public $itineraries;
     public $editingTripId = null;
@@ -15,6 +17,9 @@ class TripItinerary extends Component
 
     public function mount($trip_id)
     {
+        $this->user_id = Auth::id();
+        $this->trip_id = $trip_id;
+
         $this->itineraries = Itinerary::where('trip_id', $trip_id)
             ->orderBy('date_and_time', 'asc')
             ->get();
@@ -22,17 +27,34 @@ class TripItinerary extends Component
 
     public function openCreateItineraryModal()
     {
+        $this->resetItinerary();
         $this->itineraryModal = true;
     }
 
     public function closeItineraryModal()
     {
+        $this->resetItinerary();
         $this->itineraryModal = false;
     }
 
-    public function resetTrip()
+    public function itineraryStore()
     {
-        $this->reset(['editingTripId', 'start_date', 'end_date', 'title', 'destination']);
+        Itinerary::create([
+            'user_id' => $this->user_id,
+            'trip_id' => $this->trip_id,
+            'date_and_time' => $this->date_and_time,
+            'title' => $this->title,
+            'content' => $this->content,
+            'hide_content' => $this->hide_content,
+        ]);
+
+        $this->resetItinerary();
+        $this->closeItineraryModal();
+    }
+
+    public function resetItinerary()
+    {
+        $this->reset(['editingTripId', 'date_and_time', 'title', 'content', 'hide_content']);
     }
 
     public function render()
