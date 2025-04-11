@@ -10,6 +10,7 @@
             <h3 class="mb-2 text-xl font-bold">🗺 {{ $itinerary->title }}</h3>
             <p class="mt-2">{{ $itinerary->content }}</p>
             <p>{{ $itinerary->hide_content }}</p>
+            <x-ui.edit-button wire="openEditItineraryModal({{ $itinerary->id }})" />
         </div>
         @endforeach
     </div>
@@ -19,7 +20,7 @@
         <form wire:submit.prevent="itineraryStore" class="flex flex-col w-full">
             @csrf
             <h3 class="text-2xl text-center font-semibold mb-8">
-                旅程の追加
+                {{ $editingItineraryId ? '旅程の編集' : '旅程の追加' }}
             </h3>
             <x-form.input type="datetime-local" name="date_and_time" wire="date_and_time">日時</x-form.input>
             <x-form.input name="title" wire="title">旅程の目的</x-form.input>
@@ -30,7 +31,7 @@
                 追加情報
             </x-form.textarea>
             <x-ui.button class="block mx-auto my-4">
-                旅程を追加する
+                {{ $editingItineraryId ? '旅程を編集する' : '旅程を追加する' }}
             </x-ui.button>
         </form>
         <x-ui.button wire="closeItineraryModal" color="gray" class="block mx-auto">

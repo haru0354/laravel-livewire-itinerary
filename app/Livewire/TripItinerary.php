@@ -11,7 +11,7 @@ class TripItinerary extends Component
     public $user_id;
     public $trip_id;
     public $itineraries;
-    public $editingTripId = null;
+    public $editingItineraryId = null;
     public $itineraryModal = false;
     public $date_and_time, $title, $content, $hide_content;
 
@@ -30,6 +30,20 @@ class TripItinerary extends Component
         $this->resetItinerary();
         $this->itineraryModal = true;
     }
+
+    public function openEditItineraryModal($editingItineraryId)
+    {
+        $this->resetItinerary();
+        $itinerary = Itinerary::find($editingItineraryId);
+
+        $this->editingItineraryId = $itinerary->id;
+        $this->date_and_time = $itinerary->date_and_time;
+        $this->title = $itinerary->title;
+        $this->content = $itinerary->content;
+        $this->hide_content = $itinerary->hide_content;
+        $this->itineraryModal = true;
+    }
+
 
     public function closeItineraryModal()
     {
@@ -54,7 +68,7 @@ class TripItinerary extends Component
 
     public function resetItinerary()
     {
-        $this->reset(['editingTripId', 'date_and_time', 'title', 'content', 'hide_content']);
+        $this->reset(['editingItineraryId', 'date_and_time', 'title', 'content', 'hide_content']);
     }
 
     public function render()
