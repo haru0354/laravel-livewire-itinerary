@@ -48,10 +48,18 @@
         <x-ui.button wire="closeModal" color="gray" class="block mx-auto">閉じる </x-ui.button>
         @if ($editingTripId)
         <div class="flex items-center justify-center mt-4 pt-4 border-t border-gray-400 border-dashed">
-            <x-ui.button wire="tripDestroy" color="red">削除 </x-ui.button>
+            <x-ui.button wire="openDeleteModal" color="red">削除 </x-ui.button>
         </div>
         @endif
     </x-ui.modal>
     @endif
 
+
+    @if ($deleteModal)
+    <x-ui.modal maxWidth="max-w-[560px]" wire="closeDeleteModal">
+        <h3 class="text-2xl text-center font-semibold mb-8">
+            データの削除
+        </h3>
+    </x-ui.modal>
+    @endif
 </div>

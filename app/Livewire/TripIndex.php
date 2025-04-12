@@ -12,6 +12,7 @@ class TripIndex extends Component
     public $trips;
     public $editingTripId = null;
     public $tripModal = false;
+    public $deleteModal = false;
     public $start_date, $end_date, $title, $destination;
 
     public function mount()
@@ -41,9 +42,19 @@ class TripIndex extends Component
         $this->tripModal = true;
     }
 
+    public function openDeleteModal()
+    {
+        $this->deleteModal = true;
+    }
+
     public function closeModal()
     {
         $this->tripModal = false;
+    }
+
+    public function closeDeleteModal()
+    {
+        $this->deleteModal = false;
     }
 
     public function tripStore()
@@ -94,6 +105,7 @@ class TripIndex extends Component
             ->get();
 
         $this->resetTrip();
+        $this->closeDeleteModal();
         $this->closeModal();
     }
 
