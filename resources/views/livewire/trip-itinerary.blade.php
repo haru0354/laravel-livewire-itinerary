@@ -3,9 +3,26 @@
         <x-ui.header-with-create-button wire="openCreateItineraryModal" title="旅程">
             旅程の一覧
         </x-ui.header-with-create-button>
+        @php
+            $previousDate = null;
+        @endphp
+
         @foreach ($itineraries as $itinerary)
+            @php
+                $parsedDateTime = \Carbon\Carbon::parse($itinerary->date_and_time);
+                $currentDate = $parsedDateTime->format('Y-m-d');
+                $timeOnly = $parsedDateTime->format('H:i');
+            @endphp
+
+            @if ($currentDate !== $previousDate)
+                <h3 class="text-lg font-semibold mt-10 mb-2">
+                    📅 {{ \Carbon\Carbon::parse($itinerary->date_and_time)->format('Y年m月d日') }}
+                </h3>
+                @php $previousDate = $currentDate; @endphp
+            @endif
+
         <div class="relative flex flex-col my-6 p-6 border border-gray-300 rounded-lg shadow-lg hover:shadow-2xl transition-shadow bg-gray-50">
-            <p class="mb-3">⌚️ {{ $itinerary->date_and_time }}</p>
+            <p class="mb-3">⌚️ {{ $timeOnly }}</p>
             <h3 class="mb-2 text-xl font-bold">🗺 {{ $itinerary->title }}</h3>
             <p class="mt-2">{!! nl2br(e($itinerary->content)) !!}</p>
             <p>{!! nl2br(e($itinerary->hide_content)) !!}</p>
