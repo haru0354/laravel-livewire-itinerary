@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Memo;
-use App\Models\Trip;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +10,7 @@ class TripMemo extends Component
 {
     public $user_id;
     public $trip_id;
-    public $trip;
+    public $memos;
     public $editingMemoId = null;
     public $memoModal = false;
     public $title, $content;
@@ -20,14 +19,9 @@ class TripMemo extends Component
     {
         $this->user_id = Auth::id();
         $this->trip_id = $trip_id;
-        $this->trip = Trip::where('id', $this->trip_id)
-            ->with([
-                'itineraries' => function ($query) {
-                    $query->orderBy('date_and_time', 'asc');
-                },
-                'memos'
-            ])
-            ->first();
+
+        $this->memos = Memo::where('trip_id', $trip_id)
+            ->get();
     }
 
     public function openCreateMemoModal()
