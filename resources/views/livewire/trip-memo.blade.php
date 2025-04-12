@@ -1,10 +1,8 @@
 <div>
-
     <div>
-        <div class="flex justify-between items-center">
-            <h3 class="w-full text-2xl font-semibold">{{$trip->title}}のメモ</h3>
-            <x-ui.button wire="openCreateMemoModal" color="blue">➕ メモの作成</x-ui.button>
-        </div>
+        <x-ui.header-with-create-button wire="openCreateMemoModal" title="メモ">
+            {{$trip->title}}のメモ
+        </x-ui.header-with-create-button>
         <div class="flex flex-wrap justify-center">
             @foreach ($trip->memos as $memo)
             <div class="relative flex-wrap w-full max-w-[480px] my-3 mx-3 p-6 shadow-lg hover:shadow-2xl transition-shadow rounded-lg border border-gray-300 bg-gray-50">
@@ -41,5 +39,4 @@
         @endif
     </x-ui.modal>
     @endif
-
 </div>
