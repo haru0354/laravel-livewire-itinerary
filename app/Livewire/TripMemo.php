@@ -20,8 +20,7 @@ class TripMemo extends Component
         $this->user_id = Auth::id();
         $this->trip_id = $trip_id;
 
-        $this->memos = Memo::where('trip_id', $trip_id)
-            ->get();
+        $this->getMemos();
     }
 
     public function openCreateMemoModal()
@@ -56,6 +55,8 @@ class TripMemo extends Component
             'content' => $this->content,
         ]);
 
+        $this->getMemos();
+
         $this->resetMemo();
         $this->closeMemoModal();
     }
@@ -70,6 +71,8 @@ class TripMemo extends Component
             $memo->save();
         }
 
+        $this->getMemos();
+
         $this->resetMemo();
         $this->closeMemoModal();
     }
@@ -79,8 +82,16 @@ class TripMemo extends Component
         $memo = Memo::find($this->editingMemoId);
         $memo->delete();
 
+        $this->getMemos();
+
         $this->resetMemo();
         $this->closeMemoModal();
+    }
+
+    public function getMemos()
+    {
+        $this->memos = Memo::where('trip_id', $this->trip_id)
+            ->get();
     }
 
     public function resetMemo()
