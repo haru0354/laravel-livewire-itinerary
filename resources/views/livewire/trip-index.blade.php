@@ -54,12 +54,15 @@
     </x-ui.modal>
     @endif
 
-
     @if ($deleteModal)
     <x-ui.modal maxWidth="max-w-[560px]" wire="closeDeleteModal">
         <h3 class="text-2xl text-center font-semibold mb-8">
             データの削除
         </h3>
+        <p class="mb-6 text-center text-red-500">削除したデータは完全に失われ、復元をすることはできません。</p>
+        <p class="text-center">問題なければ削除を行ってください。</p>
+        <x-ui.button wire="closeDeleteModal" color="gray" class="block mx-auto my-6">キャンセル </x-ui.button>
+        <x-ui.button wire="tripDestroy" color="red" class="block mx-auto">削除する</x-ui.button>
     </x-ui.modal>
     @endif
 </div>
