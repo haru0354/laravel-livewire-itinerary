@@ -13,6 +13,7 @@ class TripMemo extends Component
     public $memos;
     public $editingMemoId = null;
     public $memoModal = false;
+    public $deleteMemoModal = false;
     public $title, $content;
 
     public function mount($trip_id)
@@ -40,10 +41,20 @@ class TripMemo extends Component
         $this->memoModal = true;
     }
 
+    public function openDeleteMemoModal()
+    {
+        $this->deleteMemoModal = true;
+    }
+
     public function closeMemoModal()
     {
         $this->resetMemo();
         $this->memoModal = false;
+    }
+
+    public function closeDeleteMemoModal()
+    {
+        $this->deleteMemoModal = false;
     }
 
     public function memoStore()
@@ -85,6 +96,7 @@ class TripMemo extends Component
         $this->getMemos();
 
         $this->resetMemo();
+        $this->closeDeleteMemoModal();
         $this->closeMemoModal();
     }
 
