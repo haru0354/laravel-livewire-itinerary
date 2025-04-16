@@ -13,6 +13,7 @@ class TripItinerary extends Component
     public $itineraries;
     public $editingItineraryId = null;
     public $itineraryModal = false;
+    public $deleteItineraryModal = false;
     public $date_and_time, $title, $content, $hide_content;
 
     public function mount($trip_id)
@@ -42,10 +43,20 @@ class TripItinerary extends Component
         $this->itineraryModal = true;
     }
 
+    public function openDeleteItineraryModal()
+    {
+        $this->deleteItineraryModal = true;
+    }
+
     public function closeItineraryModal()
     {
         $this->resetItinerary();
         $this->itineraryModal = false;
+    }
+
+    public function closeDeleteItineraryModal()
+    {
+        $this->deleteItineraryModal = false;
     }
 
     public function itineraryStore()
@@ -91,6 +102,7 @@ class TripItinerary extends Component
         $this->getItineraries();
 
         $this->resetItinerary();
+        $this->closeDeleteItineraryModal();
         $this->closeItineraryModal();
     }
 
