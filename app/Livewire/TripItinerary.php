@@ -13,6 +13,7 @@ class TripItinerary extends Component
     public $itineraries;
     public $editingItineraryId = null;
     public $itineraryModal = false;
+    public $deleteItineraryModal = false;
     public $date_and_time, $title, $content, $hide_content;
 
     public function mount($trip_id)
@@ -20,9 +21,7 @@ class TripItinerary extends Component
         $this->user_id = Auth::id();
         $this->trip_id = $trip_id;
 
-        $this->itineraries = Itinerary::where('trip_id', $trip_id)
-            ->orderBy('date_and_time', 'asc')
-            ->get();
+        $this->getItineraries();
     }
 
     public function openCreateItineraryModal()
@@ -44,10 +43,20 @@ class TripItinerary extends Component
         $this->itineraryModal = true;
     }
 
+    public function openDeleteItineraryModal()
+    {
+        $this->deleteItineraryModal = true;
+    }
+
     public function closeItineraryModal()
     {
         $this->resetItinerary();
         $this->itineraryModal = false;
+    }
+
+    public function closeDeleteItineraryModal()
+    {
+        $this->deleteItineraryModal = false;
     }
 
     public function itineraryStore()
@@ -60,6 +69,8 @@ class TripItinerary extends Component
             'content' => $this->content,
             'hide_content' => $this->hide_content,
         ]);
+
+        $this->getItineraries();
 
         $this->resetItinerary();
         $this->closeItineraryModal();
@@ -77,6 +88,8 @@ class TripItinerary extends Component
             $itinerary->save();
         }
 
+        $this->getItineraries();
+
         $this->resetItinerary();
         $this->closeItineraryModal();
     }
@@ -86,8 +99,18 @@ class TripItinerary extends Component
         $itinerary = Itinerary::find($this->editingItineraryId);
         $itinerary->delete();
 
+        $this->getItineraries();
+
         $this->resetItinerary();
+        $this->closeDeleteItineraryModal();
         $this->closeItineraryModal();
+    }
+
+    public function getItineraries()
+    {
+        $this->itineraries = Itinerary::where('trip_id', $this->trip_id)
+            ->orderBy('date_and_time', 'asc')
+            ->get();
     }
 
     public function resetItinerary()

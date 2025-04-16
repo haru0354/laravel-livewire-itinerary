@@ -12,14 +12,13 @@ class TripIndex extends Component
     public $trips;
     public $editingTripId = null;
     public $tripModal = false;
+    public $deleteModal = false;
     public $start_date, $end_date, $title, $destination;
 
     public function mount()
     {
         $this->user_id = Auth::id();
-        $this->trips = Trip::where('user_id', $this->user_id)
-            ->orderBy('start_date', 'asc')
-            ->get();
+        $this->getTrips();
     }
 
     public function openCreateModal()
@@ -41,9 +40,19 @@ class TripIndex extends Component
         $this->tripModal = true;
     }
 
+    public function openDeleteModal()
+    {
+        $this->deleteModal = true;
+    }
+
     public function closeModal()
     {
         $this->tripModal = false;
+    }
+
+    public function closeDeleteModal()
+    {
+        $this->deleteModal = false;
     }
 
     public function tripStore()
@@ -56,9 +65,7 @@ class TripIndex extends Component
             'destination' => $this->destination,
         ]);
 
-        $this->trips = Trip::where('user_id', $this->user_id)
-            ->orderBy('start_date', 'asc')
-            ->get();
+        $this->getTrips();
 
         $this->resetTrip();
         $this->closeModal();
@@ -76,9 +83,7 @@ class TripIndex extends Component
             $trip->save();
         }
 
-        $this->trips = Trip::where('user_id', $this->user_id)
-            ->orderBy('start_date', 'asc')
-            ->get();
+        $this->getTrips();
 
         $this->resetTrip();
         $this->closeModal();
@@ -89,12 +94,18 @@ class TripIndex extends Component
         $trip = Trip::find($this->editingTripId);
         $trip->delete();
 
+        $this->getTrips();
+
+        $this->resetTrip();
+        $this->closeDeleteModal();
+        $this->closeModal();
+    }
+
+    public function getTrips()
+    {
         $this->trips = Trip::where('user_id', $this->user_id)
             ->orderBy('start_date', 'asc')
             ->get();
-
-        $this->resetTrip();
-        $this->closeModal();
     }
 
     public function resetTrip()

@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Memo;
-use App\Models\Trip;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,23 +10,18 @@ class TripMemo extends Component
 {
     public $user_id;
     public $trip_id;
-    public $trip;
+    public $memos;
     public $editingMemoId = null;
     public $memoModal = false;
+    public $deleteMemoModal = false;
     public $title, $content;
 
     public function mount($trip_id)
     {
         $this->user_id = Auth::id();
         $this->trip_id = $trip_id;
-        $this->trip = Trip::where('id', $this->trip_id)
-            ->with([
-                'itineraries' => function ($query) {
-                    $query->orderBy('date_and_time', 'asc');
-                },
-                'memos'
-            ])
-            ->first();
+
+        $this->getMemos();
     }
 
     public function openCreateMemoModal()
@@ -47,10 +41,20 @@ class TripMemo extends Component
         $this->memoModal = true;
     }
 
+    public function openDeleteMemoModal()
+    {
+        $this->deleteMemoModal = true;
+    }
+
     public function closeMemoModal()
     {
         $this->resetMemo();
         $this->memoModal = false;
+    }
+
+    public function closeDeleteMemoModal()
+    {
+        $this->deleteMemoModal = false;
     }
 
     public function memoStore()
@@ -61,6 +65,8 @@ class TripMemo extends Component
             'title' => $this->title,
             'content' => $this->content,
         ]);
+
+        $this->getMemos();
 
         $this->resetMemo();
         $this->closeMemoModal();
@@ -76,6 +82,8 @@ class TripMemo extends Component
             $memo->save();
         }
 
+        $this->getMemos();
+
         $this->resetMemo();
         $this->closeMemoModal();
     }
@@ -85,8 +93,17 @@ class TripMemo extends Component
         $memo = Memo::find($this->editingMemoId);
         $memo->delete();
 
+        $this->getMemos();
+
         $this->resetMemo();
+        $this->closeDeleteMemoModal();
         $this->closeMemoModal();
+    }
+
+    public function getMemos()
+    {
+        $this->memos = Memo::where('trip_id', $this->trip_id)
+            ->get();
     }
 
     public function resetMemo()
