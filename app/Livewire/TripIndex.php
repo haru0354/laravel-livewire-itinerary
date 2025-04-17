@@ -60,9 +60,7 @@ class TripIndex extends Component
     {
         $validated = $this->validate();
 
-        Trip::create(array_merge($validated, [
-            'user_id' => Auth::id(),
-        ]));
+        Trip::create($validated);
 
         $this->getTrips();
 
@@ -73,6 +71,7 @@ class TripIndex extends Component
     public function tripUpdate()
     {
         $validated = $this->validate();
+        
         $trip = Trip::find($this->editingTripId);
 
         if ($trip) {
@@ -107,6 +106,7 @@ class TripIndex extends Component
     public function rules()
     {
         return [
+            'user_id' => 'required|exists:users,id',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'title' => 'required|string|max:30',

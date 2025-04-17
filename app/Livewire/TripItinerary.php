@@ -64,6 +64,7 @@ class TripItinerary extends Component
     {
 
         $validated = $this->validate(); 
+        
         Itinerary::create($validated);
 
         $this->getItineraries();
@@ -74,7 +75,8 @@ class TripItinerary extends Component
 
     public function itineraryUpdate()
     {
-        $validated = $this->validate(); 
+        $validated = $this->validate();
+
         $itinerary = Itinerary::find($this->editingItineraryId);
 
         if ($itinerary) {

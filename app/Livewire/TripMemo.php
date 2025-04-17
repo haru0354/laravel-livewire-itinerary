@@ -73,6 +73,7 @@ class TripMemo extends Component
     public function memoUpdate()
     {
         $validated = $this->validate();
+        
         $memo = Memo::find($this->editingMemoId);
 
         if ($memo) {
