@@ -48,6 +48,7 @@ class TripMemo extends Component
 
     public function closeMemoModal()
     {
+        $this->resetErrorBag();
         $this->resetMemo();
         $this->memoModal = false;
     }
@@ -59,12 +60,9 @@ class TripMemo extends Component
 
     public function memoStore()
     {
-        Memo::create([
-            'user_id' => $this->user_id,
-            'trip_id' => $this->trip_id,
-            'title' => $this->title,
-            'content' => $this->content,
-        ]);
+        $validated = $this->validate();
+
+        Memo::create($validated);
 
         $this->getMemos();
 
@@ -74,12 +72,11 @@ class TripMemo extends Component
 
     public function memoUpdate()
     {
+        $validated = $this->validate();
         $memo = Memo::find($this->editingMemoId);
 
         if ($memo) {
-            $memo->title = $this->title;
-            $memo->content = $this->content;
-            $memo->save();
+            $memo->update($validated);
         }
 
         $this->getMemos();
@@ -104,6 +101,16 @@ class TripMemo extends Component
     {
         $this->memos = Memo::where('trip_id', $this->trip_id)
             ->get();
+    }
+
+    public function rules()
+    {
+        return [
+            'user_id' => 'required|exists:users,id',
+            'trip_id' => 'required|exists:trips,id',
+            'title' => 'required|string|max:30',
+            'content' => 'nullable|string|max:200',
+        ];
     }
 
     public function resetMemo()
