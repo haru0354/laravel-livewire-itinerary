@@ -47,6 +47,7 @@ class TripIndex extends Component
 
     public function closeModal()
     {
+        $this->resetErrorBag();
         $this->tripModal = false;
     }
 
@@ -57,13 +58,11 @@ class TripIndex extends Component
 
     public function tripStore()
     {
-        Trip::create([
+        $validated = $this->validate();
+
+        Trip::create(array_merge($validated, [
             'user_id' => Auth::id(),
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'title' => $this->title,
-            'destination' => $this->destination,
-        ]);
+        ]));
 
         $this->getTrips();
 
@@ -73,14 +72,11 @@ class TripIndex extends Component
 
     public function tripUpdate()
     {
+        $validated = $this->validate();
         $trip = Trip::find($this->editingTripId);
 
         if ($trip) {
-            $trip->start_date = $this->start_date;
-            $trip->end_date = $this->end_date;
-            $trip->title = $this->title;
-            $trip->destination = $this->destination;
-            $trip->save();
+            $trip->update($validated);
         }
 
         $this->getTrips();
@@ -106,6 +102,16 @@ class TripIndex extends Component
         $this->trips = Trip::where('user_id', $this->user_id)
             ->orderBy('start_date', 'asc')
             ->get();
+    }
+
+    public function rules()
+    {
+        return [
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'title' => 'required|string|max:30',
+            'destination' => 'nullable|string|max:20',
+        ];
     }
 
     public function resetTrip()
