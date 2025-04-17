@@ -50,6 +50,7 @@ class TripItinerary extends Component
 
     public function closeItineraryModal()
     {
+        $this->resetErrorBag();
         $this->resetItinerary();
         $this->itineraryModal = false;
     }
@@ -61,14 +62,9 @@ class TripItinerary extends Component
 
     public function itineraryStore()
     {
-        Itinerary::create([
-            'user_id' => $this->user_id,
-            'trip_id' => $this->trip_id,
-            'date_and_time' => $this->date_and_time,
-            'title' => $this->title,
-            'content' => $this->content,
-            'hide_content' => $this->hide_content,
-        ]);
+
+        $validated = $this->validate(); 
+        Itinerary::create($validated);
 
         $this->getItineraries();
 
@@ -78,14 +74,11 @@ class TripItinerary extends Component
 
     public function itineraryUpdate()
     {
+        $validated = $this->validate(); 
         $itinerary = Itinerary::find($this->editingItineraryId);
 
         if ($itinerary) {
-            $itinerary->date_and_time = $this->date_and_time;
-            $itinerary->title = $this->title;
-            $itinerary->content = $this->content;
-            $itinerary->hide_content = $this->hide_content;
-            $itinerary->save();
+            $itinerary->update($validated);
         }
 
         $this->getItineraries();
@@ -111,6 +104,18 @@ class TripItinerary extends Component
         $this->itineraries = Itinerary::where('trip_id', $this->trip_id)
             ->orderBy('date_and_time', 'asc')
             ->get();
+    }
+
+    public function rules()
+    {
+        return [
+            'user_id' => 'required|exists:users,id',
+            'trip_id' => 'required|exists:trips,id',
+            'date_and_time' => 'required|date',
+            'title' => 'required|string|max:30',
+            'content' => 'nullable|string|max:200',
+            'hide_content' => 'nullable|string|max:200',
+        ];
     }
 
     public function resetItinerary()
