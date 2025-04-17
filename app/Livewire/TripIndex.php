@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Trip;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TripIndex extends Component
 {
@@ -58,7 +59,7 @@ class TripIndex extends Component
 
     public function tripStore()
     {
-        $validated = $this->validate();
+        $validated = $this->validateTrip();
 
         Trip::create($validated);
 
@@ -70,8 +71,8 @@ class TripIndex extends Component
 
     public function tripUpdate()
     {
-        $validated = $this->validate();
-        
+        $validated = $this->validateTrip();
+
         $trip = Trip::find($this->editingTripId);
 
         if ($trip) {
@@ -112,6 +113,26 @@ class TripIndex extends Component
             'title' => 'required|string|max:30',
             'destination' => 'nullable|string|max:20',
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'title' => '旅のしおりのタイトル',
+            'destination' => '行き先',
+            'start_date' => '出発日',
+            'end_date' => '帰宅日',
+        ];
+    }
+
+    protected function validateTrip()
+    {
+        return Validator::make(
+            $this->only(['user_id', 'start_date', 'end_date', 'title', 'destination']),
+            $this->rules(),
+            [],
+            $this->attributes()
+        )->validate();
     }
 
     public function resetTrip()
