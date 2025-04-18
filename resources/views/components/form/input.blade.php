@@ -6,5 +6,10 @@
     </label>
     <input type="{{ $type }}" id="{{ $name }}" name="{{ $name }}"
         @if ($wire) wire:model="{{ $wire }}" @endif
-        {{ $attributes->merge(['class' => "w-full py-1 leading-7 border rounded border-gray-300 bg-gray-50 focus:bg-white transition-colors duration-200"]) }}>
+        class="w-full py-1 leading-7 rounded transition-colors duration-200
+        {{ $errors->has($wire) ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50' }}"
+        {{ $attributes }}>
+    @error ($wire)
+    <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+    @enderror
 </div>

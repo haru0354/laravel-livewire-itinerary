@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Trip;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TripIndex extends Component
 {
@@ -47,6 +48,7 @@ class TripIndex extends Component
 
     public function closeModal()
     {
+        $this->resetErrorBag();
         $this->tripModal = false;
     }
 
@@ -57,13 +59,9 @@ class TripIndex extends Component
 
     public function tripStore()
     {
-        Trip::create([
-            'user_id' => Auth::id(),
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'title' => $this->title,
-            'destination' => $this->destination,
-        ]);
+        $validated = $this->validateTrip();
+
+        Trip::create($validated);
 
         $this->getTrips();
 
@@ -73,14 +71,12 @@ class TripIndex extends Component
 
     public function tripUpdate()
     {
+        $validated = $this->validateTrip();
+
         $trip = Trip::find($this->editingTripId);
 
         if ($trip) {
-            $trip->start_date = $this->start_date;
-            $trip->end_date = $this->end_date;
-            $trip->title = $this->title;
-            $trip->destination = $this->destination;
-            $trip->save();
+            $trip->update($validated);
         }
 
         $this->getTrips();
@@ -106,6 +102,37 @@ class TripIndex extends Component
         $this->trips = Trip::where('user_id', $this->user_id)
             ->orderBy('start_date', 'asc')
             ->get();
+    }
+
+    public function rules()
+    {
+        return [
+            'user_id' => 'required|exists:users,id',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'title' => 'required|string|max:30',
+            'destination' => 'nullable|string|max:20',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'title' => '旅のしおりのタイトル',
+            'destination' => '行き先',
+            'start_date' => '出発日',
+            'end_date' => '帰宅日',
+        ];
+    }
+
+    protected function validateTrip()
+    {
+        return Validator::make(
+            $this->only(['user_id', 'start_date', 'end_date', 'title', 'destination']),
+            $this->rules(),
+            [],
+            $this->attributes()
+        )->validate();
     }
 
     public function resetTrip()

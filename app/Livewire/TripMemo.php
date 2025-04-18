@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Memo;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TripMemo extends Component
 {
@@ -48,6 +49,7 @@ class TripMemo extends Component
 
     public function closeMemoModal()
     {
+        $this->resetErrorBag();
         $this->resetMemo();
         $this->memoModal = false;
     }
@@ -59,12 +61,9 @@ class TripMemo extends Component
 
     public function memoStore()
     {
-        Memo::create([
-            'user_id' => $this->user_id,
-            'trip_id' => $this->trip_id,
-            'title' => $this->title,
-            'content' => $this->content,
-        ]);
+        $validated = $this->validateMemo();
+
+        Memo::create($validated);
 
         $this->getMemos();
 
@@ -74,12 +73,12 @@ class TripMemo extends Component
 
     public function memoUpdate()
     {
+        $validated = $this->validateMemo();
+        
         $memo = Memo::find($this->editingMemoId);
 
         if ($memo) {
-            $memo->title = $this->title;
-            $memo->content = $this->content;
-            $memo->save();
+            $memo->update($validated);
         }
 
         $this->getMemos();
@@ -104,6 +103,34 @@ class TripMemo extends Component
     {
         $this->memos = Memo::where('trip_id', $this->trip_id)
             ->get();
+    }
+
+    public function rules()
+    {
+        return [
+            'user_id' => 'required|exists:users,id',
+            'trip_id' => 'required|exists:trips,id',
+            'title' => 'required|string|max:30',
+            'content' => 'nullable|string|max:200',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'title' => 'メモのタイトル',
+            'content' => 'メモの内容',
+        ];
+    }
+
+    protected function validateMemo()
+    {
+        return Validator::make(
+            $this->only(['user_id', 'trip_id', 'title', 'content']),
+            $this->rules(),
+            [],
+            $this->attributes()
+        )->validate();
     }
 
     public function resetMemo()
