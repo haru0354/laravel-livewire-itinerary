@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Itinerary;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TripItinerary extends Component
 {
@@ -63,8 +64,8 @@ class TripItinerary extends Component
     public function itineraryStore()
     {
 
-        $validated = $this->validate(); 
-        
+        $validated = $this->validateItinerary();
+
         Itinerary::create($validated);
 
         $this->getItineraries();
@@ -75,7 +76,7 @@ class TripItinerary extends Component
 
     public function itineraryUpdate()
     {
-        $validated = $this->validate();
+        $validated = $this->validateItinerary();
 
         $itinerary = Itinerary::find($this->editingItineraryId);
 
@@ -118,6 +119,26 @@ class TripItinerary extends Component
             'content' => 'nullable|string|max:200',
             'hide_content' => 'nullable|string|max:200',
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'date_and_time' => '日付と時間',
+            'title' => '旅程の目的',
+            'content' => '旅程の詳細',
+            'hide_content' => '旅程の追加情報',
+        ];
+    }
+
+    protected function validateItinerary()
+    {
+        return Validator::make(
+            $this->only(['user_id', 'trip_id', 'date_and_time', 'title', 'content', 'hide_content']),
+            $this->rules(),
+            [],
+            $this->attributes()
+        )->validate();
     }
 
     public function resetItinerary()
