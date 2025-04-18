@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Memo;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TripMemo extends Component
 {
@@ -60,7 +61,7 @@ class TripMemo extends Component
 
     public function memoStore()
     {
-        $validated = $this->validate();
+        $validated = $this->validateMemo();
 
         Memo::create($validated);
 
@@ -72,7 +73,7 @@ class TripMemo extends Component
 
     public function memoUpdate()
     {
-        $validated = $this->validate();
+        $validated = $this->validateMemo();
         
         $memo = Memo::find($this->editingMemoId);
 
@@ -112,6 +113,24 @@ class TripMemo extends Component
             'title' => 'required|string|max:30',
             'content' => 'nullable|string|max:200',
         ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'title' => 'メモのタイトル',
+            'content' => 'メモの内容',
+        ];
+    }
+
+    protected function validateMemo()
+    {
+        return Validator::make(
+            $this->only(['user_id', 'trip_id', 'title', 'content']),
+            $this->rules(),
+            [],
+            $this->attributes()
+        )->validate();
     }
 
     public function resetMemo()
