@@ -1,5 +1,9 @@
 # Laravel Livewireの旅程表アプリの概要
 
+|旅程表アプリ | 旅程/メモの表示 |
+|-------|-------|
+| ![旅のしおり](/public/images/thumbnail/laravel-livewire-tabinoshiori01.jpg) | ![メモの一覧](/public/images/thumbnail/laravel-livewire-tabinoshiori.jpg) |
+
 Laravel Livewireを使用したLaravelフルスタックの旅程表アプリです。
 
 Laravelでの初アプリを作成している際に「Livewire」の存在を知り、「これは使ってみたい！」と思い作成しました。
@@ -33,6 +37,25 @@ Laravelでの初アプリを作成している際に「Livewire」の存在を�
 各旅のしおりには「旅程」と「メモ」を追加することができ、円滑に旅行プランの作成をすることが可能です。
 
 また、「帰宅日が出発日より前になっていないか？」「各項目は入力されているか？」など、フォームバリデーションでミスを防ぎます。
+
+## アプリのサムネイル画像
+
+|複数旅のプランの作成 | 各しおりにメモのCRUD |
+|-------|-------|
+| ![旅のしおりの一覧](/public/images/thumbnail/laravel-livewire-tabinoshiori01.jpg) | ![旅のしおりの追加](/public/images/thumbnail/laravel-livewire-tabinoshiori.jpg) |
+
+| 各しおりに旅程のCRUD | スマホ画面での表示（旅程/メモ） |
+|-------|-------|
+| ![旅程の一覧](/public/images/thumbnail/laravel-livewire-ryoteihyou.jpg) | ![旅程の追加](/public/images/thumbnail/laravel-livewire-ryoteihyou-add.jpg) |
+
+| フォーム | フォームバリデーション |
+|-------|-------|
+| ![メモの追加](/public/images/thumbnail/laravel-livewire-memo.jpg) | ![メモの一覧](/public/images/thumbnail/laravel-livewire-memo.jpg) |
+
+| フォーム | フォームバリデーション |
+|-------|-------|
+| ![削除モーダル](/public/images/thumbnail/laravel-livewire-delete.jpg) | ![フォームバリデーション](/public/images/thumbnail/laravel-livewire-form.jpg) |
+
 
 ## セットアップ手順
 
