@@ -38,7 +38,7 @@ Laravelでの初アプリを作成している際に「Livewire」の存在を�
 
 1. リポジトリをクローン：
 
-git clone https://github.com/haru0354/laravel-restful-itinerary.git
+git clone https://github.com/haru0354/laravel-livewire-itinerary.git
 
 cd laravel-restful-itinerary
 
